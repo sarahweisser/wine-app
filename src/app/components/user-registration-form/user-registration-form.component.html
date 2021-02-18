@@ -1,0 +1,80 @@
+<div class="container">
+    <h2>User Registration</h2>
+    <form [formGroup]="userform" (ngSubmit)="save()" novalidate > 
+        <div class="form-group">
+            <label for="firstName">First Name</label>
+            <input class="form-control"
+                   id="firstName"
+                   type="text"
+                   placeholder="First Name (required)"
+                   required
+                   formControlName="firstName"
+                   [ngClass]="{ 'is-invalid': (firstName.touched || firstName.dirty) && !firstName.valid }" />
+            <span class="invalid-feedback">
+                <span class="warning-bold" *ngIf="firstName.errors?.required">
+                    {{ formValidationErrorMessages.requiredFieldMissing }}
+                    <br/>
+                </span>
+            </span>
+        </div>
+        <div class="form-group">
+            <label for="lastName">Last Name</label>
+            <input class="form-control"
+                   id="lastName"
+                   type="text"
+                   placeholder="Last Name (required)"
+                   required
+                   formControlName="lastName"
+                   [ngClass]="{ 'is-invalid': (lastName.touched || lastName.dirty) && !lastName.valid }" />
+            <span class="invalid-feedback">
+                <span class="warning-bold" *ngIf="lastName.errors?.required">
+                    {{ formValidationErrorMessages.requiredFieldMissing }}
+                    <br/>
+                </span>
+            </span>
+        </div>
+        <div class="form-group">
+            <label for="nameTitle">Preferred Title</label>
+            <select class="form-control"
+                   id="nameTitle"
+                   placeholder="Preferred title"
+                   formControlName="nameTitle" >
+                <option *ngFor="let nameTitle of nameTitles | async">{{ nameTitle }}</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input class="form-control"
+                   id="email"
+                   type="email"
+                   placeholder="Email (required)"
+                   required
+                   formControlName="email"
+                   [ngClass]="{ 'is-invalid': (email.touched || email.dirty) && !email.valid }" />
+            <span class="invalid-feedback">
+                <span class="warning-bold" *ngIf="email.errors?.required">
+                    {{ formValidationErrorMessages.requiredFieldMissing }}
+                    <br/>
+                </span>
+                <span class="warning-bold" *ngIf="email.errors?.email">
+                    {{ formValidationErrorMessages.invalidSyntaxMessage }}
+                </span>
+            </span>
+            <span *ngIf="showValidationErrors">
+                <hr />
+                <app-error-page></app-error-page>
+                <hr />
+            </span>
+            <span class="warning-bold" *ngIf="showEmailDuplicateWarning">
+                {{ formValidationErrorMessages.duplicateEmailWarning }}
+            </span>
+        </div>
+        <button class="btn btn-primary mr-3" type="submit" style="width:80px"
+                [title]="userform.valid ? 'Save your entered data' : 'Disabled until the form data is valid'"
+                [disabled]="!userform.valid">
+            Save
+        </button>
+    </form>
+</div>
+

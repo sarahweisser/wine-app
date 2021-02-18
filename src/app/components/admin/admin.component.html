@@ -1,0 +1,32 @@
+<div class="container">
+  <table class="table table-bordered table-inverse">
+    <tr>
+      <th>Wine Name</th>
+      <th class="text-right">Purchase Price</th>
+    </tr>
+    <tr *ngFor="let wine of wines">
+      <td>
+        <a [routerLink]="['view', wine.id]">{{wine.name}}</a>
+      </td>
+      <td class="text-right">
+        {{wine.purchasePrice}}
+      </td>
+    </tr>
+  </table>
+</div>
+<div class="container">
+  <table class="table table-bordered table-inverse">
+    <tr>
+      <th>User Name</th>
+      <th class="text-right">Email</th>
+    </tr>
+    <tr *ngFor="let user of users">
+      <td class="text-right">
+        {{user.firstName}} {{user.lastName}}
+      </td>
+      <td class="text-right">
+        <a [routerLink]="['user', user.id]">{{user.email}}</a>
+      </td>
+    </tr>
+  </table>
+</div>

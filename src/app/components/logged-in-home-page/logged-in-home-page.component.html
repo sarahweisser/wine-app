@@ -1,0 +1,24 @@
+<div class="container">
+    <nav class='navbar navbar-expand navbar-light bg-light'>
+      <a class='navbar-brand'></a>
+      <ul class='nav nav-pills'>
+        <li><a class='nav-link showBox' routerLinkActive='active' [routerLink]="['/logged-in-home/wine-fact']">Home</a></li>
+        <li><a class='nav-link showBox' routerLinkActive='active' [routerLink]="['/logged-in-home/wine-journal']">My Wine Journal</a></li>
+        <li><a class='nav-link showBox' routerLinkActive='active' [routerLink]="['/logged-in-home/admin']">Admin</a></li>
+      </ul>
+    </nav>
+    <br/>
+    <hr/>
+    <router-outlet></router-outlet>  
+    <br/>
+
+<div style="float: right; padding-top: 100px;">
+  <br/>
+  <br/>
+    <button type="button" class="btn btn-primary" (click)="logOut()">Log Out</button>
+</div>
+</div>
+
+
+
+  

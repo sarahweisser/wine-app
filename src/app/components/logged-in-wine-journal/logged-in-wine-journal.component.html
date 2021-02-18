@@ -1,0 +1,37 @@
+<div class="container">
+    <br/>
+    <div class='row'>
+        <div>Search your wines:</div>
+        <div class='col-md-4'>
+            <input type='text' />
+        </div>
+    </div>
+    <hr/>
+    <div class='row'>
+        <button type="button" class="btn btn-primary col-md-4" (click)="submitWine()">Enter a new wine</button>
+    </div>
+    <hr/>
+    <div class='row' *ngIf="!showWineTable">
+        <button type="button" class="btn btn-primary col-md-4" (click)="showWines()">See your wines</button>
+    </div>
+    <div class='row' *ngIf="showWineTable">
+        <button type="button" class="btn btn-primary col-md-4" (click)="hideWines()">Hide your wines</button>
+    </div>
+    <div class="container" *ngIf="showWineTable">
+        <table class="table table-bordered table-inverse">
+          <tr>
+            <th>Wine Name</th>
+            <th class="text-right">Purchase Price</th>
+          </tr>
+          <tr *ngFor="let wine of wines">
+            <td>
+              <a [routerLink]="['admin/view', wine.id]">{{wine.name}}</a>
+            </td>
+            <td class="text-right">
+              {{wine.purchasePrice}}
+            </td>
+          </tr>
+        </table>
+      </div>
+</div>
+

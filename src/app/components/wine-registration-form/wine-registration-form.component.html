@@ -1,0 +1,54 @@
+<div class="container">
+  <h2>Wine Entry Form</h2>
+    <form [formGroup]="wineform" (ngSubmit)="onSubmit()" novalidate>
+      <div class="form-group">
+        <label for="name">Wine Name</label>
+            <input class="form-control"
+                   id="name"
+                   type="text"
+                   placeholder="Wine Name (required)"
+                   required
+                   formControlName="name"
+                   [ngClass]="{ 'is-invalid': (name.touched || name.dirty) && !name.valid }" />
+            <span class="invalid-feedback">
+                <span *ngIf="name.errors?.required">
+                    {{ formValidationErrorMessages.requiredFieldMissing }}
+                </span>
+            </span>
+      </div>
+      <div class="form-group">
+        <label>Purchase Price</label>
+        <input class="form-control"
+                   id="purchasePrice"
+                   type="text"
+                   placeholder="Purchase Price (required)"
+                   required
+                   formControlName="purchasePrice"
+                   [ngClass]="{ 'is-invalid': (purchasePrice.touched || purchasePrice.dirty) && !purchasePrice.valid }" />
+            <span class="invalid-feedback">
+                <span *ngIf="purchasePrice.errors?.required">
+                  {{ formValidationErrorMessages.requiredFieldMissing }}
+                </span>
+            </span>
+      </div>
+      <div class="form-group">
+        <label>Purchase Date</label>
+        <input class="form-control"
+                   id="purchaseDate"
+                   type="text"
+                   placeholder="Purchase Date (required)"
+                   required
+                   formControlName="purchaseDate"
+                   [ngClass]="{ 'is-invalid': (purchaseDate.touched || purchaseDate.dirty) && !purchaseDate.valid }" />
+            <span class="invalid-feedback">
+                <span *ngIf="purchaseDate.errors?.required">
+                  {{ formValidationErrorMessages.requiredFieldMissing }}
+                </span>
+            </span>
+            <!-- adding datepicker in progress -->
+            <input data-provide="datepicker">
+      </div>
+  
+      <button type="submit" class="btn btn-primary" >Submit</button>
+    </form>
+  </div>

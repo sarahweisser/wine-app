@@ -1,0 +1,17 @@
+<div class="container">
+    <div class="row">
+      <a [routerLink]="['/logged-in-home/admin']" [queryParams]="{}">&lt; Back to List</a>
+    </div>
+    <div>
+      <div class="form-group">
+        <label>User Name</label>
+        <div class="form-control">{{ userFullName }}</div>
+      </div>
+      <div class="form-group">
+        <label>email</label>
+        <div class="form-control">{{userReg.email}}</div>
+      </div>
+    </div>
+
+    <button type="button" class="btn btn-primary col-md-4" (click)="deleteUser(userReg.id)">Delete This User</button>
+</div>
