@@ -12,7 +12,8 @@ import { DataService } from '../../services/data.service';
 export class AdminComponent implements OnInit {
 
   public wines;
-  public users;
+
+  users$ = this.userService.users$;
 
   constructor (
     private wineService: WineService,
@@ -22,7 +23,6 @@ export class AdminComponent implements OnInit {
 
   ngOnInit(): void {
     this.getWines();
-    this.getUsers();
   }
 
   getWines() {
@@ -32,16 +32,6 @@ export class AdminComponent implements OnInit {
       },
       err => console.log(err),
       () => console.log('wines loaded')
-    );
-  }
-
-  getUsers() {
-    this.userService.getUsers().subscribe(
-      data => {
-        this.users = data;
-      },
-      err => console.log(err),
-      () => console.log('users loaded')
     );
   }
 
