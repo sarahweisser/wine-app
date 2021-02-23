@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" *ngIf="wines$ | async as wines">
   <table class="table table-bordered table-inverse">
     <tr>
       <th>Wine Name</th>
