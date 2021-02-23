@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders} from '@angular/common/http';
-// import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { WineRegistration } from '../models/wine-registration';
+import { catchError, tap } from 'rxjs/operators';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -10,12 +11,23 @@ const httpOptions = {
 @Injectable()
 export class WineService {
 
+  private wineUrl = '/server/api/v1/wines';
+
   constructor(private http:HttpClient) {
 
   }
 
-  getWines() {
-    return this.http.get('/server/api/v1/wines');
+  wines$ = this.http.get(this.wineUrl)
+    .pipe(
+      tap(data => console.log('Wines: ', JSON.stringify(data))),
+      catchError(this.handleError)
+    );
+
+  private handleError(err: any): Observable<never> {
+    // TODO create appropriate error handling
+    let errorMessage: string = "ERROR_MESSAGE";
+    console.error(err);
+    return throwError(errorMessage);
   }
 
   getWine(id: number) {

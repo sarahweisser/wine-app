@@ -19,7 +19,7 @@ export class UserService {
 
   users$ = this.http.get<UserRegistration[]>(this.userRegistrationUrl)
     .pipe(
-      tap(data => console.log('Products: ', JSON.stringify(data))),
+      tap(data => console.log('Users: ', JSON.stringify(data))),
       catchError(this.handleError)
     );
 
