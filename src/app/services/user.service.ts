@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, throwError } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
+import { combineLatest, EMPTY, Subject } from 'rxjs';
+import { catchError, map, shareReplay, tap } from 'rxjs/operators';
 import { UserRegistration} from '../models/user-registration';
 
 const httpOptions = {
@@ -20,14 +20,34 @@ export class UserService {
   users$ = this.http.get<UserRegistration[]>(this.userRegistrationUrl)
     .pipe(
       tap(data => console.log('Users: ', JSON.stringify(data))),
-      catchError(this.handleError)
+      map(users => 
+        users.map(user => ({
+          ...user,
+          fullName: `${user.firstName} ${user.lastName}`
+        }) as UserRegistration)),
+      catchError(err => {
+        // TODO create appropriate error handling
+        console.log(err);
+        return EMPTY;
+      })
     );
 
-  private handleError(err: any): Observable<never> {
-    // TODO create appropriate error handling
-    let errorMessage: string = "ERROR_MESSAGE";
-    console.error(err);
-    return throwError(errorMessage);
+  private userSelectedSubject = new Subject<number>();
+  userSelectedAction$ = this.userSelectedSubject.asObservable();
+
+  selectedUser$ = combineLatest([
+    this.users$,
+    this.userSelectedAction$
+  ]).pipe(
+    map(([users, selectedUserId]) =>
+      users.find(user => user.id === selectedUserId)
+    ),
+    tap(user => console.log('selected user', user)),
+    shareReplay(1)
+  );
+
+  selectedUserChanged(selectedUserId: number): void {
+    this.userSelectedSubject.next(selectedUserId);
   }
 
   getUser(id: number) {

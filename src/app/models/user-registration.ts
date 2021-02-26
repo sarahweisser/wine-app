@@ -3,6 +3,8 @@
 export interface UserRegistration {
     firstName: string,
     lastName: string,
-    nameTitle,
-    email
+    nameTitle?,
+    email,
+    id,
+    fullName?
 }

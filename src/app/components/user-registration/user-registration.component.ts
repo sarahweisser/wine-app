@@ -1,33 +1,28 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { UserService } from '../../services/user.service';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+
+import { EMPTY, Observable, Subject, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'app-user-registration',
   templateUrl: './user-registration.component.html',
-  styleUrls: ['./user-registration.component.css']
+  styleUrls: ['./user-registration.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class UserRegistrationComponent implements OnInit {
-
-  userReg;
-  userFullName: string;
+export class UserRegistrationComponent {
 
   constructor(private userService: UserService, private route: ActivatedRoute, private router: Router) { }
 
-  ngOnInit(): void {
-    this.getUserReg(this.route.snapshot.params.id);
-  }
-
-  getUserReg(id: number) {
-    this.userService.getUser(id).subscribe(
-      data => {
-        this.userReg = data;
-        this.userFullName = this.assembleUserFullName();
-      },
-      err => console.error(err),
-      () => console.log('user is loaded')
+  userReg$ = this.userService.selectedUser$
+    .pipe(
+      catchError(err => {
+        // TODO create appropriate error handling
+        console.log(err);
+        return EMPTY;
+      })
     );
-  }
 
   deleteUser(id: number) {
     this.userService.deleteUser(id).subscribe(
@@ -36,10 +31,5 @@ export class UserRegistrationComponent implements OnInit {
       () => console.log('user is deleted')
     );
   }
-
-   assembleUserFullName() {
-    return this.userFullName = this.userReg.firstName + " " + this.userReg.lastName;
-   }
-
 }
 
