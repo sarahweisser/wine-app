@@ -15,18 +15,13 @@
   </table>
 </div>
 <div class="container" *ngIf="users$ | async as users">
-  <table class="table table-bordered table-inverse">
-    <tr>
-      <th>User Name</th>
-      <th class="text-right">Email</th>
-    </tr>
-    <tr *ngFor="let user of users">
-      <td class="text-right">
-        {{user.firstName}} {{user.lastName}}
-      </td>
-      <td class="text-right">
-        <a [routerLink]="['user', user.id]">{{user.email}}</a>
-      </td>
-    </tr>
-  </table>
+  <div class='list-group'>
+    <button type='button'
+            class='list-group-item'
+            *ngFor='let user of users'
+            [ngClass]="{'active': user?.id === (selectedUser$ | async)?.id}"
+            (click)='onSelected(user.id)'>
+            {{user.firstName}} {{user.lastName}} | {{user.email}}
+    </button>
+  </div>
 </div>
